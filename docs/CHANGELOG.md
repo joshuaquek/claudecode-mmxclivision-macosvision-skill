@@ -1,5 +1,15 @@
 # Changelog
-<!-- updated: 2026-05-08_19:30:00 -->
+<!-- updated: 2026-05-09 -->
+
+## [1.1.0] - 2026-05-09
+
+### Added
+- Project-level MEMORY.md integration via hook - auto-adds skill directive on first image analysis
+- Global npm install of mmx-cli (`sudo npm install -g mmx-cli`)
+
+### Changed
+- MiniMax Vision AI runs first, OCR is fallback
+- Uses `mmx-cli` directly instead of `npx mmx-cli`
 
 ## [1.0.0] - 2026-05-08
 
