@@ -1,14 +1,14 @@
 # ClaudeCode MiniMax Vision + macOS Vision Skill 🎨
 
-> **Give your Claude Code the power to "see" images!** This skill lets Claude analyze any image you share — whether it's from a website, uploaded directly, or saved on your computer.
+> **Give your Claude Code the power to "see" images!** This skill enables image analysis for Claude Code by using MiniMax Vision AI and built-in macOS tools.
 
-## What Does This Do? 🤔
+## Why Do You Need This? 🤔
 
-Normally, Claude Code can only read text — it can't look at pictures. This skill fixes that! It works like a translator between images and Claude:
+Claude Code with MiniMax M2.7 is a **text-only model** — it can't see images by itself. This skill bridges that gap by:
 
-- You share an image 📷
-- The skill analyzes it (using AI and OCR) 🧠
-- Claude sees a detailed description and can answer questions about it 💬
+1. Detecting when you share an image 🖼️
+2. Analyzing it with MiniMax Vision AI (which CAN see) 🤖
+3. Injecting the analysis results so Claude can respond 💬
 
 ## What It Can Analyze
 
@@ -19,8 +19,6 @@ Normally, Claude Code can only read text — it can't look at pictures. This ski
 | **💾 Local Files** | Images on your Mac | Enter the file path like `/Users/name/photo.png` |
 
 ## Quick Install ⚡
-
-> **Note:** These commands go in your Mac's Terminal app. Don't worry if that sounds scary — it's just a text-based way to run commands!
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/claudecode-mmxclivision-macosvision-skill.git
@@ -76,20 +74,28 @@ You: "What's in this photo? /Users/josh/Pictures/vacation.png"
 
 ## What You Need 📋
 
-- ✅ **macOS** (Mac computer) — this skill uses built-in Apple tools
-- ✅ **Claude Code** installed
+- ✅ **macOS** (Mac computer)
+- ✅ **Claude Code** running MiniMax M2.7
 - 🌐 **Internet** — needed for AI descriptions
-- 🔑 **MiniMax API Key** — optional but recommended for best results
+- 🔑 **MiniMax API Key** — required for AI vision features
 
-### Getting a MiniMax API Key (Optional but Recommended)
+### Setting Up Your MiniMax API Key
 
-Without this key, you still get OCR text extraction (it works offline). But for full AI-powered descriptions, you'll need a key:
-
-1. Sign up at MiniMax's website to get an API key
+1. Get your API key from [MiniMax Platform](https://platform.minimax.io/docs)
 2. Run this command in Terminal:
    ```bash
    npx mmx-cli config set api-key YOUR_KEY
    ```
+
+## How It Works (Technical Details) ⚙️
+
+This skill uses a hook that:
+
+1. **Intercepts your messages** before Claude processes them
+2. **Detects images** (URLs, uploads, or local file paths)
+3. **Sends to MiniMax Vision AI** for analysis (AI description + OCR)
+4. **Injects the results** into your message as context
+5. **Claude receives** a text description instead of an image
 
 ## Troubleshooting 🛠️
 
@@ -98,7 +104,7 @@ Having issues? Check out these guides:
 - [Installation Guide](docs/INSTALLATION.md) — Step-by-step setup help
 - [Capabilities](docs/CAPABILITIES.md) — What this skill can and can't do
 - [Troubleshooting](docs/TROUBLESHOOTING.md) — Common problems and solutions
-- [Architecture](docs/ARCHITECTURE.md) — Technical details (for the curious!)
+- [Architecture](docs/ARCHITECTURE.md) — Technical details
 
 ## License 📄
 
