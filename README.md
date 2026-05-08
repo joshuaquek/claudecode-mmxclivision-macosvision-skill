@@ -1,4 +1,4 @@
-# ClaudeCode MiniMax Vision Skill 🎨
+# ClaudeCode MiniMax Vision Skill 🎨 
 
 > Image analysis for Claude Code with MiniMax M2.7 — works exactly like Claude Code with Opus 4.6. Just attach an image and chat normally.
 
