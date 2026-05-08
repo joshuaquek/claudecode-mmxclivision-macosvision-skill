@@ -1,4 +1,5 @@
 # ClaudeCode MiniMax Vision Skill 🎨 
+ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=joshuaquek_claudecode-mmxclivision-macosvision-skill&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=joshuaquek_claudecode-mmxclivision-macosvision-skill) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=joshuaquek_claudecode-mmxclivision-macosvision-skill&metric=bugs)](https://sonarcloud.io/summary/new_code?id=joshuaquek_claudecode-mmxclivision-macosvision-skill) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=joshuaquek_claudecode-mmxclivision-macosvision-skill&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=joshuaquek_claudecode-mmxclivision-macosvision-skill) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=joshuaquek_claudecode-mmxclivision-macosvision-skill&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=joshuaquek_claudecode-mmxclivision-macosvision-skill)
 
 > Image analysis for Claude Code with MiniMax M2.7 — works exactly like Claude Code with Opus 4.6. Just attach an image and chat normally.
 
