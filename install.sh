@@ -102,22 +102,25 @@ setup_minimax() {
         return 0
     fi
 
-    info "Installing mmx-cli..."
-    if npx -y mmx-cli --version >/dev/null 2>&1; then
-        log "mmx-cli already installed"
+    info "Installing mmx-cli globally..."
+    if command -v mmx-cli >/dev/null 2>&1; then
+        log "mmx-cli already installed globally"
     else
-        info "Installing mmx-cli via npx..."
-        npx -y mmx-cli --version >/dev/null 2>&1 || {
-            warn "mmx-cli installation may have failed, continuing anyway..."
-        }
+        info "Installing mmx-cli via sudo npm install -g mmx-cli..."
+        if sudo npm install -g mmx-cli 2>/dev/null; then
+            log "mmx-cli installed successfully"
+        else
+            warn "mmx-cli installation failed. You may need to run:"
+            echo "  sudo npm install -g mmx-cli"
+        fi
     fi
 
     info "Configuring mmx-cli with your API key..."
-    if MINIMAX_API_KEY="$api_key" npx -y mmx-cli config set api-key "$api_key" 2>/dev/null; then
+    if mmx-cli config set api-key "$api_key" 2>/dev/null; then
         log "MiniMax API key configured successfully"
     else
         warn "Could not configure mmx-cli. You may need to run:"
-        echo "  npx mmx-cli config set api-key YOUR_API_KEY"
+        echo "  mmx-cli config set api-key YOUR_API_KEY"
     fi
 }
 

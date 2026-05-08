@@ -67,7 +67,7 @@ MiniMax Vision provides AI-powered image descriptions. Without it, you still get
 2. Get your API key
 3. If you skipped during install, run:
    ```bash
-   npx mmx-cli config set api-key YOUR_API_KEY
+   mmx-cli config set api-key YOUR_API_KEY
    ```
 
 ## Verifying Installation

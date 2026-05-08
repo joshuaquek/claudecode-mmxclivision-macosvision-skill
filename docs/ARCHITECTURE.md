@@ -84,7 +84,7 @@ https?://[^[:space:]]+\.(png|jpg|jpeg|gif|webp|bmp|tiff)(\?[^[:space:]]*)?
    ├─ qlmanage -t -s 400           # Thumbnail
    ├─ sips -g profile              # Color profile
    │
-3. npx mmx-cli vision describe --file "$image"   # AI description
+3. mmx-cli vision describe --file "$image"   # AI description
    │
 4. swift ocr.swift "$image"        # OCR text extraction
 ```

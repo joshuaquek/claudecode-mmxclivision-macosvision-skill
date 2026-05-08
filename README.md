@@ -21,7 +21,7 @@ Restart Claude Code.
 
 - macOS
 - Claude Code on MiniMax M2.7
-- MiniMax API key (`npx mmx-cli config set api-key YOUR_KEY`)
+- MiniMax API key (`mmx-cli config set api-key YOUR_KEY`)
 
 ## Documentation 📖
 

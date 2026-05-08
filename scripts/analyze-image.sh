@@ -105,16 +105,20 @@ analyze_image() {
     sips -g profile "$path" 2>/dev/null | grep -i profile || echo "No embedded color profile"
     echo ""
 
-    # --- MiniMax Vision (if mmx-cli config exists) ---
-    if [[ -f "$HOME/.mmx/config.json" ]]; then
+    # --- MiniMax Vision (primary - requires mmx-cli) ---
+    if command -v mmx-cli >/dev/null 2>&1 && [[ -f "$HOME/.mmx/config.json" ]]; then
         echo "=== MiniMax Vision AI Description ==="
         local mmx_desc
-        mmx_desc=$(npx -y mmx-cli vision describe --file "$path" 2>/dev/null)
+        mmx_desc=$(mmx-cli vision describe --file "$path" 2>/dev/null)
         if [[ $? -eq 0 && -n "$mmx_desc" && "$mmx_desc" != *"error"* ]]; then
             echo "$mmx_desc"
         else
-            echo "(MiniMax vision failed)"
+            echo "(MiniMax vision failed or not configured)"
         fi
+        echo ""
+    else
+        echo "=== MiniMax Vision AI Description ==="
+        echo "(mmx-cli not installed or not configured)"
         echo ""
     fi
 

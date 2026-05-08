@@ -36,9 +36,8 @@ MiniMax M2.7 is a text-only model. This skill works around that by:
 ## MiniMax CLI Setup (Optional)
 
 ```bash
-npm install -g mmx-cli
-export MINIMAX_API_KEY=your-key-here
-mmx-cli config set api-key $MINIMAX_API_KEY
+sudo npm install -g mmx-cli
+mmx-cli config set api-key YOUR_API_KEY
 ```
 
 The API key is stored in `~/.mmx/config.json` — not hardcoded anywhere.

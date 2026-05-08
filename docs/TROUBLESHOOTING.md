@@ -17,14 +17,9 @@ If you see this error:
 mmx-cli: command not found
 ```
 
-**Fix:** Install it manually:
+**Fix:** Install it globally:
 ```bash
-npm install -g mmx-cli
-```
-
-Or run via npx:
-```bash
-npx mmx-cli vision describe --file image.png
+sudo npm install -g mmx-cli
 ```
 
 ### "No API key" error from MiniMax
@@ -36,7 +31,7 @@ If MiniMax Vision returns:
 
 **Fix:** Configure your API key:
 ```bash
-npx mmx-cli config set api-key YOUR_API_KEY
+mmx-cli config set api-key YOUR_API_KEY
 ```
 
 ### Hook not triggering
