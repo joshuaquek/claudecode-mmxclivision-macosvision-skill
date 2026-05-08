@@ -1,14 +1,14 @@
 # Usage Guide
-<!-- updated: 2026-05-08 -->
+<!-- updated: 2026-05-09 -->
 
 ## How It Works — The Seamless Experience
 
 MiniMax M2.7 is a **text-only model** — it can't see images by itself. This skill acts as a bridge:
 
 1. **Intercept** — Detects when you share an image (URL, upload, or local path)
-2. **Analyze** — Sends to MiniMax Vision AI for description + uses macOS Vision for OCR
-3. **Inject** — Adds the analysis as text context before Claude sees your message
-4. **Respond** — Claude responds naturally, seeing the image description instead of the image
+2. **Analyze** — Runs **both** MiniMax Vision AI (for description) **and** macOS Vision OCR (for text) simultaneously
+3. **Inject** — Adds the combined analysis as text context before Claude sees your message
+4. **Respond** — Claude responds naturally, seeing the image description and extracted text
 
 **The result:** It feels exactly like using Claude Code with Opus 4.6. You just attach an image and chat normally.
 
@@ -52,7 +52,7 @@ When you share an image, the hook automatically:
 2. Downloads/analyzes the image
 3. Gets AI description from MiniMax Vision (if API key configured)
 4. Extracts text via OCR using macOS Vision (always works, even offline)
-5. Injects results before your message
+5. Injects combined results before your message
 
 Claude Code sees something like:
 
@@ -75,7 +75,7 @@ What does this screenshot show?
 
 ## Supported Image Types
 
-- PNG, JPEG, GIF, WebP, BMP, TIFF
+PNG, JPEG, GIF, WebP, BMP, TIFF
 
 ## Without a MiniMax API Key
 
@@ -83,6 +83,7 @@ OCR text extraction still works offline using macOS Vision. You'll get:
 
 - Extracted text from the image
 - File metadata (dimensions, type, etc.)
+- An install hint for mmx-cli
 
 With a MiniMax API key, you also get:
 

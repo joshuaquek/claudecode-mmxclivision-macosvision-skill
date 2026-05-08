@@ -1,6 +1,6 @@
 ---
 name: analyze-image
-description: Analyze images using CLI tools when MiniMax M2.7 can't natively see images. Downloads image, extracts metadata, OCR text, and visual AI description.
+description: Analyze images using macOS Vision framework for OCR and MiniMax Vision AI for visual description. Always runs both tools in parallel — OCR for text extraction, mmx-cli for visual understanding.
 model: haiku
 effort: low
 allowed-tools: Bash, Read, Write
@@ -15,9 +15,10 @@ Analyzes images using pure CLI tools when the text-only model needs to understan
 
 MiniMax M2.7 is a text-only model. This skill works around that by:
 1. Saving the image to a temp location
-2. Using macOS CLI tools to extract metadata, text (OCR)
-3. Using MiniMax Vision AI (if `mmx-cli` is configured) for visual description
-4. Returning a text report that Claude Code can understand
+2. Running **both** tools in parallel:
+   - MiniMax Vision AI for visual description (requires API key)
+   - Swift Vision OCR for text extraction (always runs, no API key needed)
+3. Returning a combined text report that Claude Code can understand
 
 ## Usage
 
@@ -25,13 +26,15 @@ MiniMax M2.7 is a text-only model. This skill works around that by:
 /analyze-image <image-url-or-path>
 ```
 
-## Tool Stack (Layered)
+## Tool Stack
 
 | Tool | Purpose | Requirement |
 |------|---------|-------------|
-| `file`, `sips`, `mdls`, `curl` | Metadata extraction | Built-in to macOS |
-| `mmx-cli vision` | Visual AI description | Optional: install via `npm install -g mmx-cli` |
-| Swift Vision framework | OCR (text extraction) | Built-in to macOS |
+| `file`, `sips`, `mdls`, `curl`, `qlmanage` | Metadata extraction | Built-in to macOS |
+| `mmx-cli vision` | Visual AI description | Optional: `npm install -g mmx-cli` |
+| Swift Vision framework | OCR (text extraction) | Built-in to macOS, always available |
+
+Both analysis tools run **simultaneously** — OCR does not depend on mmx-cli and vice versa.
 
 ## MiniMax CLI Setup (Optional)
 
@@ -52,10 +55,10 @@ Dimensions: <width>x<height>
 File Size: <size KB>
 
 === MiniMax Vision AI Description ===
-<visual description from AI>
+<visual description from AI, or install hint if not configured>
 
 === Extracted Text (OCR) ===
-<any text found in image>
+<text extracted from image, or no-text message>
 
 === File Info / Metadata ===
 <technical details>
@@ -63,6 +66,6 @@ File Size: <size KB>
 
 ## Files
 
-- `scripts/analyze-image.sh` — Main script
+- `scripts/analyze-image.sh` — Main script (orchestrates all tools)
 - `scripts/ocr.swift` — Swift Vision OCR helper
-- `hooks/analyze-image-on-url.sh` — Claude Code UserPromptSubmit hook (auto-analyzes image URLs)
+- `hooks/analyze-image-on-url.sh` — Claude Code UserPromptSubmit hook

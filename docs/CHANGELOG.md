@@ -1,6 +1,17 @@
 # Changelog
 <!-- updated: 2026-05-09 -->
 
+## [1.2.0] - 2026-05-09
+
+### Fixed
+- **ocr.swift semaphore bug**: `try? handler.perform([request])` could throw silently, preventing the semaphore from signaling and causing OCR to return empty results. Fixed with proper try-catch that always signals the semaphore.
+- **analyze-image.sh error handling**: OCR call was discarding stderr with `2>/dev/null` and not properly capturing exit codes. Changed to `2>&1; exit ${PIPESTATUS[0]}` to properly capture errors.
+- **Both tools now run simultaneously**: Previously OCR ran only if mmx-cli failed. Now both MiniMax Vision AI and Swift OCR run in parallel — OCR always runs, and mmx-cli runs if available.
+
+### Changed
+- OCR section now always prints even if mmx-cli is not installed (shows install hint instead of failing)
+- Error messages now visible instead of being swallowed
+
 ## [1.1.0] - 2026-05-09
 
 ### Added
@@ -9,7 +20,6 @@
 
 ### Changed
 - MiniMax Vision AI runs first, OCR is fallback
-- Uses `mmx-cli` directly instead of `npx mmx-cli`
 
 ## [1.0.0] - 2026-05-08
 

@@ -106,30 +106,33 @@ analyze_image() {
     echo ""
 
     # --- MiniMax Vision (primary - requires mmx-cli) ---
+    # Always runs if mmx-cli is available; shows install hint if not
+    echo "=== MiniMax Vision AI Description ==="
     if command -v mmx-cli >/dev/null 2>&1 && [[ -f "$HOME/.mmx/config.json" ]]; then
-        echo "=== MiniMax Vision AI Description ==="
         local mmx_desc
         mmx_desc=$(mmx-cli vision describe --file "$path" 2>/dev/null)
         if [[ $? -eq 0 && -n "$mmx_desc" && "$mmx_desc" != *"error"* ]]; then
             echo "$mmx_desc"
         else
-            echo "(MiniMax vision failed or not configured)"
+            echo "(MiniMax vision attempt failed)"
         fi
-        echo ""
     else
-        echo "=== MiniMax Vision AI Description ==="
-        echo "(mmx-cli not installed or not configured)"
-        echo ""
+        echo "(mmx-cli not installed — install with: npm install -g mmx-cli)"
     fi
+    echo ""
 
     # --- OCR via Swift Vision framework (fallback) ---
+    # Always runs regardless of mmx-cli status
     echo "=== Extracted Text (OCR) ==="
     local ocr_text
-    ocr_text=$(swift "$(dirname "$0")/ocr.swift" "$path" 2>/dev/null | grep -A 100 "EXTRACTED TEXT")
-    if [[ -n "$ocr_text" ]]; then
+    local ocr_exit
+    ocr_text=$(swift "$(dirname "$0")/ocr.swift" "$path" 2>&1; exit ${PIPESTATUS[0]})
+    ocr_exit=$?
+    if [[ $ocr_exit -eq 0 && -n "$ocr_text" ]]; then
         echo "$ocr_text"
     else
-        echo "(No text detected or OCR failed)"
+        echo "(No text detected or OCR failed: exit $ocr_exit)"
+        echo "$ocr_text"
     fi
     echo ""
 }

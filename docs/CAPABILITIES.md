@@ -1,5 +1,5 @@
 # Capabilities
-<!-- updated: 2026-05-08_19:30:00 -->
+<!-- updated: 2026-05-09 -->
 
 ## What This Skill Can Do
 
@@ -8,18 +8,13 @@
 | Feature | Description | Requirements |
 |---------|-------------|--------------|
 | **Visual Description** | AI-powered description of what's in the image | MiniMax API key |
-| **Text Extraction (OCR)** | Extract visible text from screenshots, documents, etc. | None (works offline) |
+| **Text Extraction (OCR)** | Extract visible text from screenshots, documents | None (works offline) |
 | **Metadata Extraction** | File type, dimensions, color profile, EXIF data | None |
 | **Thumbnail Generation** | Creates a preview thumbnail | None |
 
 ### Supported Image Types
 
-- PNG
-- JPEG
-- GIF
-- WebP
-- BMP
-- TIFF
+PNG, JPEG, GIF, WebP, BMP, TIFF
 
 ### Use Cases
 
@@ -41,18 +36,22 @@
 
 ## How It Works
 
-### Two-Layer Approach
+### Two Tools Running in Parallel
 
-1. **MiniMax Vision AI** (primary, if configured)
+Unlike a fallback approach where one tool only runs if the other fails, this skill runs **both tools simultaneously**:
+
+1. **MiniMax Vision AI** (if configured)
    - Sends image to MiniMax's vision model
    - Returns detailed visual description
    - Requires internet + API key
+   - Shows install hint if not available
 
-2. **Swift Vision OCR** (fallback/backup)
+2. **Swift Vision OCR** (always runs)
    - Uses built-in macOS Vision framework
    - Extracts visible text from images
    - Works completely offline
    - No API key needed
+   - Shows error message if it fails
 
 ### Auto-Hook Behavior
 

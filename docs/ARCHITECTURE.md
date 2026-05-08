@@ -1,5 +1,5 @@
 # Architecture
-<!-- updated: 2026-05-08_19:30:00 -->
+<!-- updated: 2026-05-09 -->
 
 ## Overview
 
@@ -31,10 +31,10 @@ This skill enables image analysis for Claude Code by combining:
 │                   analyze-image.sh                            │
 │                                                              │
 │  1. Download image to temp directory                          │
-│  2. Extract metadata (file, sips, mdls)                       │
-│  3. Call mmx-cli vision (if configured)                      │
-│  4. Call ocr.swift for text extraction                        │
-│  5. Return structured report                                 │
+│  2. Extract metadata (file, sips, mdls)                     │
+│  3. Call mmx-cli vision (if available)                       │
+│  4. Call ocr.swift for text extraction (always)              │
+│  5. Return combined structured report                        │
 └─────────────────────────────────────────────────────────────┘
                               │
               ┌───────────────┴───────────────┐
@@ -46,6 +46,7 @@ This skill enables image analysis for Claude Code by combining:
 │  - Uses MiniMax API     │     │  - Local OCR               │
 │  - Internet required    │     │  - No external deps        │
 │  - Visual understanding │     │  - Text extraction only     │
+│  - Runs simultaneously  │     │  - Runs simultaneously     │
 └─────────────────────────┘     └─────────────────────────────┘
 ```
 
@@ -56,7 +57,7 @@ This skill enables image analysis for Claude Code by combining:
 ├── skills/
 │   └── analyze-image/
 │       ├── analyze-image.sh    # Main orchestrator
-│       └── ocr.swift           # Swift Vision OCR
+│       └── ocr.swift          # Swift Vision OCR
 ├── hooks/
 │   └── analyze-image-on-url.sh # UserPromptSubmit hook
 └── settings.json               # Hook registration
@@ -84,10 +85,17 @@ https?://[^[:space:]]+\.(png|jpg|jpeg|gif|webp|bmp|tiff)(\?[^[:space:]]*)?
    ├─ qlmanage -t -s 400           # Thumbnail
    ├─ sips -g profile              # Color profile
    │
-3. mmx-cli vision describe --file "$image"   # AI description
+3. mmx-cli vision describe --file "$image"   # AI description (parallel)
    │
-4. swift ocr.swift "$image"        # OCR text extraction
+4. swift ocr.swift "$image"        # OCR text extraction (parallel)
 ```
+
+### Parallel Execution
+
+Both analysis tools (mmx-cli and ocr.swift) are called sequentially from the same script, but their results are independent. The script always calls both:
+- **mmx-cli** runs first and either returns a description or an install hint
+- **ocr.swift** runs second and either returns extracted text or an error message
+- Neither depends on the other succeeding
 
 ## Key Design Decisions
 
@@ -96,13 +104,14 @@ https?://[^[:space:]]+\.(png|jpg|jpeg|gif|webp|bmp|tiff)(\?[^[:space:]]*)?
 - Swift for Vision framework access (native macOS OCR)
 - No external dependencies beyond what's built into macOS
 
-### Why Two Analysis Methods?
+### Why Two Analysis Methods Running in Parallel?
 - MiniMax Vision: Full visual understanding, requires API
 - Swift OCR: Local, fast, no API needed, only text extraction
-- Users can have basic functionality without API key
+- Users get basic functionality (OCR) without API key, enhanced functionality (Vision AI) with it
+- Both tools always run — results are combined into one report
 
 ### Why Hook-Based?
-- Automatic - no manual /analyze-image command needed
+- Automatic - no manual `/analyze-image` command needed
 - Seamless - image analysis appears before user message
 - Transparent - users don't need to know the mechanics
 
