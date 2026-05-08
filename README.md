@@ -2,6 +2,9 @@
 
 > Image analysis for Claude Code with MiniMax M2.7 — works exactly like Claude Code with Opus 4.6. Just attach an image and chat normally.
 
+## Why Does This Exist?
+When using Minimax M2.7 with Claude Code, you lose the built-in image analysis that Opus 4.6 has with Claude Code, simply because MiniMax M2.7 is a text-only model. This skill restores that functionality by integrating MiniMax CLI's vision capabilities and a fallback MacOS-native OCR solution.
+
 ## Install ⚡
 
 ```bash
