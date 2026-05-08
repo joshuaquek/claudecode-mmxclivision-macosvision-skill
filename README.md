@@ -1,8 +1,26 @@
-# ClaudeCode MiniMax Vision + macOS Vision Skill
+# ClaudeCode MiniMax Vision + macOS Vision Skill 🎨
 
-Enable image analysis for text-only Claude Code models using MiniMax Vision AI and built-in macOS tools.
+> **Give your Claude Code the power to "see" images!** This skill lets Claude analyze any image you share — whether it's from a website, uploaded directly, or saved on your computer.
 
-## Quick Install
+## What Does This Do? 🤔
+
+Normally, Claude Code can only read text — it can't look at pictures. This skill fixes that! It works like a translator between images and Claude:
+
+- You share an image 📷
+- The skill analyzes it (using AI and OCR) 🧠
+- Claude sees a detailed description and can answer questions about it 💬
+
+## What It Can Analyze
+
+| Type | Example | How to Use |
+|------|---------|------------|
+| **🌐 Image URLs** | Screenshots from websites | Paste a link like `https://example.com/photo.png` |
+| **📤 Uploaded Images** | Photos, diagrams, memes | Drag & drop or paste directly into chat |
+| **💾 Local Files** | Images on your Mac | Enter the file path like `/Users/name/photo.png` |
+
+## Quick Install ⚡
+
+> **Note:** These commands go in your Mac's Terminal app. Don't worry if that sounds scary — it's just a text-based way to run commands!
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/claudecode-mmxclivision-macosvision-skill.git
@@ -11,31 +29,23 @@ chmod +x install.sh
 ./install.sh
 ```
 
-Then restart Claude Code.
+Then **restart Claude Code** (close it completely and reopen it).
 
-## What It Does
+## How to Use It 🚀
 
-Works with **image URLs, uploaded images, and local file paths**:
-
-1. **Image URLs** - `https://example.com/screenshot.png`
-2. **Uploaded images** - Just paste or upload an image in Claude Code
-3. **Local paths** - `/path/to/image.png`
-
-The hook automatically detects images, analyzes them, and injects results before your message.
-
-**Example (URL):**
+### Example 1: Analyzing an Image URL
 ```
-Look at this image: https://example.com/screenshot.png
+You: "Look at this screenshot: https://example.com/screenshot.png"
 ```
 
-**Automatically becomes:**
+Claude automatically sees:
 ```
 === IMAGE ANALYSIS ===
 Source: screenshot.png
 Dimensions: 1200 x 800
 
 MiniMax Vision AI Description:
-A screenshot showing a terminal window with...
+A screenshot showing a terminal window with code...
 
 === Extracted Text (OCR) ===
 git status
@@ -47,38 +57,49 @@ Original user request:
 Look at this image: https://example.com/screenshot.png
 ```
 
-**Example (upload):**
-Just drag & drop or paste an image and ask your question. The hook detects the upload and analyzes it automatically — no commands needed.
+### Example 2: Uploading an Image Directly
+Just drag & drop an image into the chat window, then ask your question. The skill detects it automatically — no extra commands needed!
 
-## Features
+### Example 3: A Local File on Your Mac
+```
+You: "What's in this photo? /Users/josh/Pictures/vacation.png"
+```
 
-| Feature | Description |
-|---------|-------------|
-| **AI Vision** | Detailed image descriptions (requires MiniMax API) |
-| **OCR** | Extract text from screenshots (works offline) |
-| **Metadata** | File type, dimensions, EXIF, color profile |
-| **Auto-Hook** | Detects URLs, uploads, and local paths automatically |
-| **Offline Mode** | OCR works without internet or API key |
+## Features ✨
 
-## Requirements
+| Feature | What It Does | Works Offline? |
+|---------|--------------|----------------|
+| **🤖 AI Vision** | Gets detailed AI-powered descriptions of your images | ❌ Requires internet |
+| **📝 OCR Text Extraction** | Pulls out any text visible in the image | ✅ Yes! |
+| **📋 Metadata** | Shows file type, dimensions, color info | ✅ Yes! |
+| **🔄 Auto-Detection** | Finds images automatically in your messages | ✅ Yes! |
 
-- macOS
-- Claude Code
+## What You Need 📋
 
-## Optional: MiniMax API Key
+- ✅ **macOS** (Mac computer) — this skill uses built-in Apple tools
+- ✅ **Claude Code** installed
+- 🌐 **Internet** — needed for AI descriptions
+- 🔑 **MiniMax API Key** — optional but recommended for best results
 
-Without an API key, OCR text extraction still works. To enable AI vision descriptions:
+### Getting a MiniMax API Key (Optional but Recommended)
 
-1. Get a MiniMax API key
-2. Run: `npx mmx-cli config set api-key YOUR_KEY`
+Without this key, you still get OCR text extraction (it works offline). But for full AI-powered descriptions, you'll need a key:
 
-## Documentation
+1. Sign up at MiniMax's website to get an API key
+2. Run this command in Terminal:
+   ```bash
+   npx mmx-cli config set api-key YOUR_KEY
+   ```
 
-- [Installation Guide](docs/INSTALLATION.md)
-- [Capabilities](docs/CAPABILITIES.md)
-- [Troubleshooting](docs/TROUBLESHOOTING.md)
-- [Architecture](docs/ARCHITECTURE.md)
+## Troubleshooting 🛠️
 
-## License
+Having issues? Check out these guides:
 
-MIT
+- [Installation Guide](docs/INSTALLATION.md) — Step-by-step setup help
+- [Capabilities](docs/CAPABILITIES.md) — What this skill can and can't do
+- [Troubleshooting](docs/TROUBLESHOOTING.md) — Common problems and solutions
+- [Architecture](docs/ARCHITECTURE.md) — Technical details (for the curious!)
+
+## License 📄
+
+MIT — free to use, modify, and share!
