@@ -98,20 +98,16 @@ for IMAGE in $ALL_IMAGES; do
 done
 
 # Inject the analysis results into the prompt
+# Pass via stdin to avoid any bash variable injection into Python string literals
 if [[ -n "$ANALYSIS_RESULTS" ]]; then
-    echo "$INPUT" | python3 -c "
+    printf '%s' "$ANALYSIS_RESULTS" | python3 -c "
 import sys, json
+analysis = sys.stdin.read()
 data = json.load(sys.stdin)
-
-# Inject analysis results
 original_prompt = data.get('prompt', data.get('text', data.get('message', '')))
-analysis = '''$ANALYSIS_RESULTS'''
-
-# Prepend analysis to prompt
 data['prompt'] = analysis + '\n\n---\n\nOriginal user request:\n' + original_prompt
-
 print(json.dumps(data))
-" 2>/dev/null || echo "$INPUT"
+" <<< "$INPUT" 2>/dev/null || echo "$INPUT"
 else
     echo "$INPUT"
 fi

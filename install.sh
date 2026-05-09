@@ -103,8 +103,8 @@ setup_minimax() {
     fi
 
     info "Installing mmx-cli globally..."
-    if command -v mmx-cli >/dev/null 2>&1; then
-        log "mmx-cli already installed globally"
+    if command -v mmx >/dev/null 2>&1; then
+        log "mmx already installed globally"
     else
         info "Installing mmx-cli via sudo npm install -g mmx-cli..."
         if sudo npm install -g mmx-cli 2>/dev/null; then
@@ -115,12 +115,12 @@ setup_minimax() {
         fi
     fi
 
-    info "Configuring mmx-cli with your API key..."
-    if mmx-cli config set api-key "$api_key" 2>/dev/null; then
+    info "Configuring mmx with your API key..."
+    if mmx config set api-key "$api_key" 2>/dev/null; then
         log "MiniMax API key configured successfully"
     else
-        warn "Could not configure mmx-cli. You may need to run:"
-        echo "  mmx-cli config set api-key YOUR_API_KEY"
+        warn "Could not configure mmx. You may need to run:"
+        echo "  mmx config set api-key YOUR_API_KEY"
     fi
 }
 
@@ -218,9 +218,9 @@ with open(settings_file, 'w') as f:
 
 print('done')
 PYEOF
-    "$SETTINGS_FILE" "$HOOKS_DIR/analyze-image-on-url.sh"
+    PYTHON_STATUS=$?
 
-    if [[ $? -eq 0 ]]; then
+    if [[ $PYTHON_STATUS -eq 0 ]]; then
         log "Claude Code settings updated with UserPromptSubmit hook"
     else
         warn "Could not update settings.json automatically."

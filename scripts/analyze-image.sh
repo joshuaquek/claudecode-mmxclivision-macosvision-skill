@@ -108,16 +108,17 @@ analyze_image() {
     # --- MiniMax Vision (primary - requires mmx-cli) ---
     # Always runs if mmx-cli is available; shows install hint if not
     echo "=== MiniMax Vision AI Description ==="
-    if command -v mmx-cli >/dev/null 2>&1 && [[ -f "$HOME/.mmx/config.json" ]]; then
+    if command -v mmx >/dev/null 2>&1 && [[ -f "$HOME/.mmx/config.json" ]]; then
         local mmx_desc
-        mmx_desc=$(mmx-cli vision describe --file "$path" 2>/dev/null)
-        if [[ $? -eq 0 && -n "$mmx_desc" && "$mmx_desc" != *"error"* ]]; then
+        mmx_desc=$(mmx vision describe --file "$path" --prompt "You are analyzing a screenshot for coding and debugging purposes. Provide extremely detailed descriptions including: all UI elements visible, any text or error messages, code snippets, terminal output, stack traces, file paths, line numbers, variable names, function names, class names, configuration values, and any other technical details relevant to software development and debugging." 2>/dev/null)
+        local mmx_exit=$?
+        if [[ $mmx_exit -eq 0 && -n "$mmx_desc" && "$mmx_desc" != *"error"* ]]; then
             echo "$mmx_desc"
         else
             echo "(MiniMax vision attempt failed)"
         fi
     else
-        echo "(mmx-cli not installed — install with: npm install -g mmx-cli)"
+        echo "(mmx not installed — install with: npm install -g mmx-cli)"
     fi
     echo ""
 
